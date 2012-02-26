@@ -1,0 +1,22 @@
+{
+	"name" : "Facebook Photo Creep",
+	"version" : "0.1",
+	"description" : "Easily copy/paste photos for friends that want to creep but can't because they aren't friends!",
+	"icons" : {
+		  "48" : "fb-icon-73-73.png"
+		  },
+	"page_action": {
+			  "default_icon" : "fb-icon-73-73.png",
+			  "default_title" : "FB Creep away!"
+			},
+	"permissions" : [
+		      "tabs"
+		      ],
+	"content_scripts" : [
+			  {
+				"matches" : ["http://www.facebook.com/media/set/*","https://www.facebook.com/media/set/*"],
+				"js" : ["content_script.js"]
+			}
+			]
+
+}		  

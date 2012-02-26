@@ -1,0 +1,26 @@
+{
+	"name" : "Facebook Me-Gusta Button",
+	"version" : "1.51",
+	"description" : "Replace the boring 'Like' button with the Me Gusta face!",
+	"icons" : {
+		  "16" : "megusta_16.png",
+		  "48" : "megusta_48.png",
+		  "128" : "megusta_128.png"
+		  },
+	"background_page" : "bg.html",
+	"page_action": {
+			  "default_icon" : "megusta_16.png",
+			  "default_title" : "Begin Reddit Rage Spree"
+			},
+	"permissions" : [
+		      "tabs"
+		      ],
+	"content_scripts" : [
+			  {
+				"matches" : ["http://www.facebook.com/*","https://www.facebook.com/*"],
+				"js" : ["jquery-1.6.4.min.js","content_script.js"],
+				"css" : ["megusta.css"]
+			}
+			]
+
+}		  
