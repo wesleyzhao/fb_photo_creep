@@ -102,7 +102,7 @@ function generate_perma_photos_el(html_text){
 
     var div = document.createElement('div');
     div.id = "fb-thumbs";
-    var msg = "Double-click here to select all (right-click or CTRL+C to copy)<br>";
+    var msg = "Try highlighting all the photos and copy/pasting into an email!<br>";
     div.innerHTML = msg+html_text;
     return div;
 }
