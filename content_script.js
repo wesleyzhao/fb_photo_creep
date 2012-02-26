@@ -1,6 +1,25 @@
 var BUTTON_INSERT_DIV = "fbxPhotoSetPageHeaderByline";
 var button = insert_custom_button_into_page();
+insert_lightbox_into_page();
+
 button.addEventListener("click", show_photos_for_copy);
+
+
+function insert_lightbox_into_page(){
+    var outer_div = document.createElement('div');
+    var light_div = document.createElement('div');
+    var dark_div = document.createElement('div');
+
+    light_div.id = "light";
+    light_div.setAttribute('class', 'white_content');
+    
+    dark_div.id = "fade";
+    dark_div.setAttribute('class', 'black_overlay');
+    
+    outer_div.appendChild(light_div);
+    outer_div.appendChild(dark_div);
+    document.body.appendChild(outer_div);
+}
 
 function insert_custom_button_into_page(){
     var button = create_button('copy-fb-button', 'Prepare photo album for copying');
@@ -32,8 +51,22 @@ function insert_element_into_element(parent_el, to_insert_el){
 function show_photos_for_copy(){
     var html = generate_perma_photos_html();
     var photos_el = generate_perma_photos_el(html);
-    document.body.appendChild(photos_el);
+    var lightbox_el = document.getElementById('light');
+    lightbox_el.appendChild(photos_el);
+    show_lightbox();
+}
 
+function show_lightbox(){
+    document.getElementById('light').style.display='block';
+    var fade = document.getElementById('fade');
+    fade.style.display='block';
+
+    fade.addEventListener("click", hide_lightbox);
+}
+
+function hide_lightbox(){
+    document.getElementById('light').style.display='none';
+    document.getElementById('fade').style.display='none';
 }
 
 function generate_perma_photos_html(){
@@ -54,7 +87,13 @@ function generate_perma_photos_html(){
 	var thumb_match_arr = thumb_bg_style.match(/url\((.*)\)/i);
 	var thumb_src = thumb_match_arr[1];
 	
-	html_src += "<div style='height: 100px; width: 100px; overflow:hidden; display:inline;'><a target='_blank' href='" + image_src +"'><img height='100' src='" +thumb_src+"'/></a></div>";
+	if (thumb_src.match(/\images\/spacer\.gif/i)){
+	    // in case the thumbnails dont load... figure out secret sauce
+	    // and load by self lulz
+	    thumb_src = image_src.replace("_n.jpg", "_a.jpg");
+	}
+
+	html_src += "<div><a style='margin: 5px 5px 5px 5px; float:left; height: 100px; width: 100px; overflow:hidden; position:relative; border: 1px solid black;' target='_blank' href='" + image_src +"'><img style='position:absolute; float:left;' width='140' src='" +thumb_src+"'/></a></div>";
     }
     return html_src;
 }
@@ -63,7 +102,8 @@ function generate_perma_photos_el(html_text){
 
     var div = document.createElement('div');
     div.id = "fb-thumbs";
-    div.innerHTML = html_text;
+    var msg = "Double-click here to select all (right-click or CTRL+C to copy)<br>";
+    div.innerHTML = msg+html_text;
     return div;
 }
 

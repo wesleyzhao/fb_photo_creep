@@ -15,7 +15,8 @@
 	"content_scripts" : [
 			  {
 				"matches" : ["http://www.facebook.com/media/set/*","https://www.facebook.com/media/set/*"],
-				"js" : ["content_script.js"]
+				"js" : ["content_script.js"],
+				"css" : ["style.css"]
 			}
 			]
 
